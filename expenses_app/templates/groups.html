@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% set active_page = "groups" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <legend class="border-bottom mb-4">Pasirinkite grupę</legend>
+            {% if not groups %}
+                <p>Grupių nėra</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-columns">
+        {% if groups %}
+            {% for group in groups %}
+                <div class="card p-2 m-2" style="display: inline-block;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="{{ url_for('expenses', group_id=group.id) }}">ID: {{ group.id }}</a>
+                        </h4>
+                        <p class="card-text">{{ group.name }}</p>
+                    </div>
+                </div>            
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Prisijunkite prie grupės:</legend>
+                    <div class="mb-2">
+                        {{ form.group_id.label(class="form-text") }}
+                        {% if form.group_id.errors %}
+                            {{ form.group_id(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.group_id.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.group_id(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

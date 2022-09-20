@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% set active_page = "login" %}
+{% block content %}
+    <div class="col-md-4 offset-md-4 content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Prisijunkite</legend>
+                <div class="mb-2">
+                    {{ form.email.label(class="form-text") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="mb-2">
+                    {{ form.password.label(class="form-text") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        <div class="pt-3">
+            <small class="text-muted">
+               Neturite paskyros? <a class="ml-2" href="{{ url_for('register') }}">Užsiregistruokite.</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

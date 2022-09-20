@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <legend class="border-bottom mb-4">{{ group.name }}</legend>
+        </div>
+    </div>
+    <div class="row">
+        {% if group.expenses %}
+            <table class="table">
+                <tr>
+                    <td><b>ID</b></td>
+                    <td><b>Aprašymas</b></td>
+                    <td><b>Suma</b></td>
+                </tr>
+                {% for expense in group.expenses %}
+                <tr>
+                    <td>{{ expense.id }}</td>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.amount }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="col-md-4 offset-md-4">
+                <p>Išlaidų nėra</p>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Pridėkite išlaidas</legend>
+                    <div class="mb-2">
+                        {{ form.amount.label(class="form-text") }}
+                        {% if form.amount.errors %}
+                            {{ form.amount(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.amount.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.amount(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-2">
+                        {{ form.description.label(class="form-text") }}
+                        {% if form.description.errors %}
+                            {{ form.description(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.description(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
